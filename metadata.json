@@ -1,0 +1,13 @@
+{
+  "name": "pierrickl-glance",
+  "version": "0.1.0",
+  "author": "pierrickl",
+  "summary": "Installs and configures the Glance and CIC integration solution",
+  "license": "Apache 2.0",
+  "source": "https://github.com/PierrickI3/inin-glance.git",
+  "project_page": "https://github.com/PierrickI3/pierrickl-glance",
+  "issues_url": "https://github.com/PierrickI3/pierrickl-glance/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
