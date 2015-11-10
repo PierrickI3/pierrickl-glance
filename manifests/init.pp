@@ -152,7 +152,7 @@ class glance (
 
   file_line {'Configure Demo1 URL':
     path     => 'C:/inetpub/wwwroot/glance/scripts/config.js',
-    line     => "\"url\": \"http://tim-cic4su5.dev2000.com/glance/demo1.html\"",
+    line     => "\"url\": \"http://${hostname}/glance/demo1.html\"",
     match    => '.*demo1\.html.*',
     multiple => false,
     require  => Unzip["${cache_dir}/glanceweb.zip"],
@@ -160,7 +160,7 @@ class glance (
 
   file_line {'Configure Demo2 URL':
     path     => 'C:/inetpub/wwwroot/glance/scripts/config.js',
-    line     => "\"url\": \"http://tim-cic4su5.dev2000.com/glance/demo2.html\"",
+    line     => "\"url\": \"http://${hostname}/glance/demo2.html\"",
     match    => '.*demo2\.html.*',
     multiple => false,
     require  => Unzip["${cache_dir}/glanceweb.zip"],
@@ -196,8 +196,8 @@ class glance (
   if ($usedev2000domain) {
     host {'dev2000':
       ensure => 'present',
-      name =>'tim-cic4su5.dev2000.com',
-      ip => '127.0.0.1',
+      name   => 'tim-cic4su5.dev2000.com',
+      ip     => '127.0.0.1',
     }
   }
 
