@@ -201,4 +201,21 @@ class glance (
     }
   }
 
+  # Add shortcut to desktop. Should probably move this to a template.
+  file {'Add Desktop Shortcut Script':
+    ensure   => present,
+    path     => "${cache_dir}\\createglanceshortcut.ps1",
+    content  => "
+      function CreateShortcut(\$AppLocation, \$description){
+        \$WshShell = New-Object -ComObject WScript.Shell
+        \$Shortcut = \$WshShell.CreateShortcut(\"\$env:USERPROFILE\\Desktop\\\$description.url\")
+        \$Shortcut.TargetPath = \$AppLocation
+        #\$Shortcut.Description = \$description
+        \$Shortcut.Save()
+      }
+      CreateShortcut \"http://${hostname}/glance\" \"Glance\"
+      ",
+      require => Unzip["${cache_dir}/glanceweb.zip"],
+  }
+
 }
