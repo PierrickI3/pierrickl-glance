@@ -19,12 +19,16 @@
 # [*usedev2000domain*]
 #   Set to true if you do not own a domain that can be whitelisted by Glance. This will add an entry to the hosts file that point tim-cic4su5.dev2000.com to your machine.
 #
+# [*targetchatworkgroup*]
+#   Specify the workgroup that will receive the chat interactions. Default value: glance
+#
 # === Examples
 #
 #  class { 'glance':
 #    ensure              => installed,
 #    clientbuttoninstall => true,
 #    usedev2000domain    => false,
+#    targetchatworkgroup => 'Support',
 #  }
 #
 # === Authors
@@ -39,6 +43,7 @@ class glance (
     $ensure = installed,
     $clientbuttoninstall = false,
     $usedev2000domain = true,
+    $targetchatworkgroup = 'glance',
 )
 {
   if ($::operatingsystem != 'Windows')
@@ -177,12 +182,10 @@ class glance (
     require  => Unzip["${cache_dir}/glanceweb.zip"],
   }
 
-  file_line {'Configure index.html window.open':
-    path     => 'C:/inetpub/wwwroot/glance/chat/BypassLoginForm/js/config.js',
-    line     => "window.open('http://${hostname}/glance/chathost.html?chatUsername=Vincent%20Adultman', '_blank', 'location=no,menubar=0,titlebar=0,status=0,toolbar=0,height=550,width=920,top=10,left=10,scrollbars=1,resizable=1');",
-    match    => '.*window\.open.*chathost.*',
-    multiple => false,
-    require  => Unzip["${cache_dir}/glanceweb.zip"],
+  file {'C:/inetpub/wwwroot/glance/chat/BypassLoginForm/js/config.js':
+    ensure  => present,
+    content => template('glance/chatconfig.js.erb'),
+    require => Unzip["${cache_dir}/glanceweb.zip"],
   }
 
   ################
