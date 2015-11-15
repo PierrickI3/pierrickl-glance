@@ -1,7 +1,7 @@
 {
-  "name": "pierrickl-glance",
+  "name": "PierrickL-glance",
   "version": "0.1.0",
-  "author": "pierrickl",
+  "author": "Pierrick Lozach",
   "summary": "Installs and configures the Glance and CIC integration solution",
   "license": "Apache 2.0",
   "source": "https://github.com/PierrickI3/inin-glance.git",
