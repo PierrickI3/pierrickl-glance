@@ -46,6 +46,12 @@ class glance (
     $targetchatworkgroup = 'glance',
 )
 {
+
+  $clientbuttoninstallerfinallocation = 'C:/I3/IC/Utilities/' # Where the client button msi is copied to
+  $net452downloadurl                  = 'https://download.microsoft.com/download/E/2/1/E21644B5-2DF2-47C2-91BD-63C560427900/NDP452-KB2901907-x86-x64-AllOS-ENU.exe'
+  $clientbuttoninstallerdownloadurl   = 'https://onedrive.live.com/download?resid=181212A4EB2683F0!5975&authkey=!AEYOvBaxJirAmNg&ithint=file%2cmsi'
+  $glancewebsitedownloadurl           = 'https://onedrive.live.com/download?resid=181212A4EB2683F0!5974&authkey=!AGsyI62g8WzK_k0&ithint=file%2czip'
+
   if ($::operatingsystem != 'Windows')
   {
     err('This module works on Windows only!')
@@ -63,8 +69,6 @@ class glance (
     }
   }
 
-  $clientbuttoninstallerfinallocation = 'C:/I3/IC/Utilities/' # Where the client button msi is copied to
-
   # Install firefox
   package {'firefox':
     ensure   => present,
@@ -73,7 +77,7 @@ class glance (
 
   # Install .Net 4.5.2 if it's not present
   exec {'Download .Net 4.5.2':
-    command  => "\$wc = New-Object System.Net.WebClient;\$wc.DownloadFile('https://download.microsoft.com/download/E/2/1/E21644B5-2DF2-47C2-91BD-63C560427900/NDP452-KB2901907-x86-x64-AllOS-ENU.exe','${cache_dir}/NDP452-KB2901907-x86-x64-AllOS-ENU.exe')",
+    command  => "\$wc = New-Object System.Net.WebClient;\$wc.DownloadFile('${net452downloadurl}','${cache_dir}/NDP452-KB2901907-x86-x64-AllOS-ENU.exe')",
     path     => $::path,
     cwd      => $::system32,
     timeout  => 900,
@@ -86,7 +90,7 @@ class glance (
 
   # Download and copy client button installer
   exec {'Download Client Button installer':
-    command  => "\$wc = New-Object System.Net.WebClient;\$wc.DownloadFile('https://onedrive.live.com/download?resid=181212A4EB2683F0!5975&authkey=!AEYOvBaxJirAmNg&ithint=file%2cmsi','${cache_dir}/GlanceClientButtonInstaller.msi')",
+    command  => "\$wc = New-Object System.Net.WebClient;\$wc.DownloadFile('${clientbuttoninstallerdownloadurl}','${cache_dir}/GlanceClientButtonInstaller.msi')",
     path     => $::path,
     cwd      => $::system32,
     timeout  => 900,
@@ -120,7 +124,7 @@ class glance (
 
   # Download and copy sample web site to C:\inetpub\wwwroot\glance
   exec {'Download glance web site':
-    command  => "\$wc = New-Object System.Net.WebClient;\$wc.DownloadFile('https://onedrive.live.com/download?resid=181212A4EB2683F0!5974&authkey=!AGsyI62g8WzK_k0&ithint=file%2czip','${cache_dir}/glanceweb.zip')",
+    command  => "\$wc = New-Object System.Net.WebClient;\$wc.DownloadFile('${glancewebsitedownloadurl}','${cache_dir}/glanceweb.zip')",
     path     => $::path,
     cwd      => $::system32,
     timeout  => 900,
