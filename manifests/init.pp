@@ -227,4 +227,12 @@ class glance (
       require => Unzip["${cache_dir}/glanceweb.zip"],
   }
 
+  exec {'Add Desktop Shortcut':
+    command  => "${cache_dir}\\createglanceshortcut.ps1",
+    path     => $::path,
+    cwd      => $::system32,
+    provider => powershell,
+    require  => File['Add Desktop Shortcut Script'],
+  }
+
 }
