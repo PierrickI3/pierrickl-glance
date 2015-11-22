@@ -22,13 +22,17 @@
 # [*targetchatworkgroup*]
 #   Specify the workgroup that will receive the chat interactions. Default value: glance
 #
+# [*targetcallbackworkgroup*]
+#   Specify the workgroup that will receive the callback interactions. Default value: glance
+#
 # === Examples
 #
 #  class { 'glance':
-#    ensure              => installed,
-#    clientbuttoninstall => true,
-#    usedev2000domain    => false,
-#    targetchatworkgroup => 'Support',
+#    ensure                  => installed,
+#    clientbuttoninstall     => true,
+#    usedev2000domain        => false,
+#    targetchatworkgroup     => 'Support',
+#    targetcallbackworkgroup => 'Support',
 #  }
 #
 # === Authors
@@ -44,6 +48,7 @@ class glance (
     $clientbuttoninstall = false,
     $usedev2000domain = true,
     $targetchatworkgroup = 'glance',
+    $targetcallbackworkgroup = 'glance',
 )
 {
 
